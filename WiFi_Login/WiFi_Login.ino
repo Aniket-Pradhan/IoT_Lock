@@ -1,7 +1,10 @@
 #include <ESP8266WebServer.h>
 
+Serial mySerial;
+PrintWriter output;
+
 const String loginPage = "<!DOCTYPE html><html><head><title>Login</title></head><body> <div id=\"login\"> <form action='/login' method='POST'> <center> <h1>Login </h1><p><input type='text' name='user' placeholder='User name'></p><p><input type='password' name='pass' placeholder='Password'></p><br><button type='submit' name='submit'>login</button></center> </form></body></html>";
-const String loginok = "<!DOCTYPE html><html><head><title>Login</title></head><body> <div> <form action='/' method='POST'> <center> <a href=\"/refresh\"><h3>Refresh<h3></a><br><a href=\"/logoff\"><h3>Logoff</h3></a><br><a href=\"/on\"><h3>Unlock</h3></a><br><a href=\"/off\"><h3>Lock<h3></a></center> </form></body></html>";
+const String loginok = "<!DOCTYPE html><html><head><title>Login</title></head><body> <div> <form action='/' method='POST'> <center> <a href=\"/refresh\"><h4>Refresh</h4></a><br><a href=\"/logoff\"><h4>Logoff</h4></a><br><a href=\"/on\"><h4>Unlock</h4></a><br><a href=\"/off\"><h4>Lock</h4></a></center> </form></body></html>";
 
 const char* ssid     = "Pradhans";
 const char* password = "SRkna11812";
@@ -22,6 +25,8 @@ String sessioncookie;
 
 void setup(void) {
   Serial.begin(115200);
+  mySerial = new Serial( this, Serial.list()[0],115200);
+  output = createWriter( "data.txt" );
   delay(10);
 
   pinMode(LED, OUTPUT);
@@ -44,7 +49,6 @@ void setup(void) {
   Serial.println(WiFi.localIP());
 
   gencookie();
-
   server.on("/", handleRoot);
 
   server.onNotFound(handleNotFound);
@@ -151,9 +155,13 @@ void loop(void) {
     trycount = 0;
     logincld = millis();
   }
-
+  if (abs(millis() - tempign) > 30000) {
+    switchOff();
+    tempign = millis();
+  }
 
   if (abs(millis() - tempign) > 120000) {
+    switchOff();
     gencookie();
     tempign = millis();
   }
@@ -166,12 +174,14 @@ void logoff() {
 }
 
 void switchOn() {
+  mySerial.print("Unlocked by " + username + " at time: " + "\n");
   digitalWrite(LED, HIGH);
   String header = "HTTP/1.1 301 OK\r\nLocation: /\r\nCache-Control: no-cache\r\n\r\n";
   server.sendContent(header);
 }
 
 void switchOff() {
+  mySerial.print("Locked at time: " + "\n\n");
   digitalWrite(LED, LOW);
   String header = "HTTP/1.1 301 OK\r\nLocation: /\r\nCache-Control: no-cache\r\n\r\n";
   server.sendContent(header);
