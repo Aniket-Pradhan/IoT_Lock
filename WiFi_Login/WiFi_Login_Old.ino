@@ -1,8 +1,7 @@
 #include <ESP8266WebServer.h>
 
 const String loginPage = "<!DOCTYPE html><html><head><title>Login</title></head><body> <div id=\"login\"> <form action='/login' method='POST'> <center> <h1>Login </h1><p><input type='text' name='user' placeholder='User name'></p><p><input type='password' name='pass' placeholder='Password'></p><br><button type='submit' name='submit'>login</button></center> </form></body></html>";
-//const String loginok = "<!DOCTYPE html><html><head><title>Login</title></head><body> <div> <form action='/' method='POST'> <center> <a href=\"/refresh\"><h4>Refresh</h4></a><a href=\"/logoff\"><h4>Logoff</h4></a><a href=\"/on\"><h4>Unlock</h4></a><a href=\"/off\"><h4>Lock</h4></a><a href=\"/Log\"><h4>Show Log</h4></a></center> </form></body></html>";
-char loginok[10000];
+const String loginok = "<!DOCTYPE html><html><head><title>Login</title></head><body> <div> <form action='/' method='POST'> <center> <a href=\"/refresh\"><h4>Refresh</h4></a><a href=\"/logoff\"><h4>Logoff</h4></a><a href=\"/on\"><h4>Unlock</h4></a><a href=\"/off\"><h4>Lock</h4></a><a href=\"/Log\"><h4>Show Log</h4></a></center> </form></body></html>";
 
 const char* ssid     = "Pradhans";
 const char* password = "SRkna11812";
@@ -24,50 +23,6 @@ ESP8266WebServer server(80);
 String sessioncookie;
 
 void setup(void) {
-  snprintf ( loginok, 10000,
-  "<!DOCTYPE html>\
-<html>\
-<head>\
-    <title>Login</title>\
-    <style>\
-      body {\
-        background: #FF4444;\
-        font-family: calibri;\
-      }\
-    a:link, a:visited {\
-      background-color: #FFF;\
-      border: 2px solid #555555;\
-      -webkit-transition-duration: 0.4s;\
-      color: red;\
-      cursor: pointer;\
-      padding: 14px 25px;\
-      text-align: center;\
-      text-decoration: none;\
-      transition-duration: 0.4s;\
-      display: inline-block;\
-    }\
-    a:hover, a:active {\
-      border: 2px solid #555555;\
-      background-color: #555555;\
-      color: #FFF;\
-    }\
-    </style>\
-</head>\
-<body>\
-    <div>\
-        <form action='/' method='POST'>\
-            <center>\
-             <a href= \"/refresh\">Refresh</a>\
-             <a href= \"/logoff\">Logoff</a>\
-             <a href= \"/on\"> ON </a>\
-             <a href= \"/off\"> OFF </a>\
-             <a href= \"/Log\"> Show Log </a>\
-            </center>\
-        </form>\
-</body>\
-</html>");  
-
-
   Serial.begin(115200);
   delay(10);
 
