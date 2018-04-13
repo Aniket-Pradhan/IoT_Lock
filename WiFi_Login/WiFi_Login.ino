@@ -4,8 +4,8 @@ const String loginPage = "<!DOCTYPE html><html><head><title>Login</title></head>
 //const String loginok = "<!DOCTYPE html><html><head><title>Login</title></head><body> <div> <form action='/' method='POST'> <center> <a href=\"/refresh\"><h4>Refresh</h4></a><a href=\"/logoff\"><h4>Logoff</h4></a><a href=\"/on\"><h4>Unlock</h4></a><a href=\"/off\"><h4>Lock</h4></a><a href=\"/Log\"><h4>Show Log</h4></a></center> </form></body></html>";
 char loginok[10000];
 
-const char* ssid     = "Pradhans";
-const char* password = "SRkna11812";
+const char* ssid     = "Ajax";
+const char* password = "qwertyui";
 
 String Log = "";
 
