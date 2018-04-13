@@ -59,8 +59,8 @@ void setup(void) {
             <center>\
              <a href= \"/refresh\">Refresh</a>\
              <a href= \"/logoff\">Logoff</a>\
-             <a href= \"/on\"> ON </a>\
-             <a href= \"/off\"> OFF </a>\
+             <a href= \"/on\"> UNLOCK </a>\
+             <a href= \"/off\"> LOCK </a>\
              <a href= \"/Log\"> Show Log </a>\
             </center>\
         </form>\
