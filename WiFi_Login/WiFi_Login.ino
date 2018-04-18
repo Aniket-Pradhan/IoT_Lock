@@ -287,6 +287,7 @@ void switchOn() {
 void showLog() {
   String content = "<center><br>";
   content += Log;
+  content += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
   content += "</center>";
   String theWebPage = loginok;
   theWebPage += content;
