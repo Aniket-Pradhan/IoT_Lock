@@ -4,7 +4,7 @@ const String loginPage = "<!DOCTYPE html><html><head><title>Login</title></head>
 //const String loginok = "<!DOCTYPE html><html><head><title>Login</title></head><body> <div> <form action='/' method='POST'> <center> <a href=\"/refresh\"><h4>Refresh</h4></a><a href=\"/logoff\"><h4>Logoff</h4></a><a href=\"/on\"><h4>Unlock</h4></a><a href=\"/off\"><h4>Lock</h4></a><a href=\"/Log\"><h4>Show Log</h4></a></center> </form></body></html>";
 char loginok[10000];
 
-const char* ssid     = "Ajax";
+const char* ssid     = "MI5";
 const char* password = "qwertyui";
 
 String Log = "";
@@ -28,42 +28,100 @@ void setup(void) {
   "<!DOCTYPE html>\
 <html>\
 <head>\
-    <title>Login</title>\
-    <style>\
-      body {\
-        background: #FF4444;\
-        font-family: calibri;\
-      }\
-    a:link, a:visited {\
-      background-color: #FFF;\
-      border: 2px solid #555555;\
-      -webkit-transition-duration: 0.4s;\
-      color: red;\
-      cursor: pointer;\
-      padding: 14px 25px;\
-      text-align: center;\
-      text-decoration: none;\
-      transition-duration: 0.4s;\
-      display: inline-block;\
+  <title>Login</title>\
+  <style>\
+  * {\
+    box-sizing: border-box;\
+  }\
+  body {\
+    background: linear-gradient(-135deg, #c850c0, #4158d0);\
+    font-family: calibri;\
+    width: 100%;\
+    min-height: 100vh;\
+    display: -webkit-box;\
+    display: -webkit-flex;\
+    display: -moz-box;\
+    display: -ms-flexbox;\
+    display: flex;\
+    flex-wrap: wrap;\
+    justify-content: center;\
+    align-items: center;\
+    padding: 15px;\
+    background: #9053c7;\
+    background: -webkit-linear-gradient(-135deg, #c850c0, #4158d0);\
+    background: -o-linear-gradient(-135deg, #c850c0, #4158d0);\
+    background: -moz-linear-gradient(-135deg, #c850c0, #4158d0);\
+    background: linear-gradient(-135deg, #c850c0, #4158d0);\
+  }\
+  a:link, a:visited {\
+    border: 2px solid #4158d0;\
+    background-color: #4158d0;\
+    -webkit-transition-duration: 0.4s;\
+    color: #FFF;\
+    cursor: pointer;\
+    padding: 14px 25px;\
+    text-align: center;\
+    text-decoration: none;\
+    transition-duration: 0.4s;\
+    display: inline-block;\
+    width: 200px;\
+  }\
+  a:hover, a:active {\
+    border: 2px solid #c850c0;\
+    background-color: #c850c0;\
+    color: #FFF;\
+  }\
+  .login-form {\
+    width: 400px;\
+    margin: 50px auto;\
+  }\
+  .login-form h2 {\
+    margin: 0 0 15px;\
+  }\
+  .form-control, .btn {\
+    min-height: 38px;\
+    border-radius: 2px;\
+  }\
+  .btn {\
+    font-size: 15px;\
+    font-weight: bold;\
+  }\
+  .boxxing {\
+    margin-bottom: 15px;\
+    background: #f7f7f7;\
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);\
+    padding: 30px;\
+  }\
+  @media screen and (max-width: 600px) {\
+    .col-25, .col-75, input {\
+      width: 100%;\
+      margin-top: 0;\
     }\
-    a:hover, a:active {\
-      border: 2px solid #555555;\
-      background-color: #555555;\
-      color: #FFF;\
-    }\
-    </style>\
+  }\
+</style>\
 </head>\
 <body>\
-    <div>\
+  <center>\
+    <div class=\"login-form\">\
+      <div class=\"boxxing\">\
+        <h2>SLOCK</h2>\
         <form action='/' method='POST'>\
-            <center>\
-             <a href= \"/refresh\">Refresh</a>\
-             <a href= \"/logoff\">Logoff</a>\
-             <a href= \"/on\"> UNLOCK </a>\
-             <a href= \"/off\"> LOCK </a>\
-             <a href= \"/Log\"> Show Log </a>\
-            </center>\
-        </form>\
+           <a href= \"/refresh\">Refresh</a>\
+           <br>\
+           <a href= \"/logoff\">Logoff</a>\
+           <br>\
+           <a href= \"/on\"> UNLOCK </a>\
+           <br>\
+           <a href= \"/off\"> LOCK </a>\
+           <br>\
+           <a href= \"/Log\"> Show Log </a>\
+           <br>\
+           <a href= \"/resetLog\">Reset Log</a>\
+           <br>\
+       </form>\
+     </div>\
+   </div>\
+  </center>\
 </body>\
 </html>");  
 
@@ -101,6 +159,7 @@ void setup(void) {
   server.on("/on", switchOn);
   server.on("/off", switchOff);
   server.on("/Log", showLog);
+  server.on("/resetLog", resetLog);
 
   const char * headerkeys[] = {"User-Agent", "Cookie"} ;
   size_t headerkeyssize = sizeof(headerkeys) / sizeof(char*);
@@ -188,6 +247,7 @@ void gencookie() {
 void loop(void) {
   server.handleClient();
 
+  
   if (lock && abs(millis() - logincld) > 300000) {
     lock = false;
     trycount = 0;
@@ -199,12 +259,12 @@ void loop(void) {
     logincld = millis();
   }
   if (abs(millis() - tempign) > 30000) {
-    switchOff();
+    switchOffe();
     tempign = millis();
   }
 
   if (abs(millis() - tempign) > 120000) {
-    switchOff();
+    switchOffe();
     gencookie();
     tempign = millis();
   }
@@ -231,6 +291,18 @@ void showLog() {
   String theWebPage = loginok;
   theWebPage += content;
   server.send(200, "text/html", theWebPage);
+  String header = "HTTP/1.1 301 OK\r\nLocation: /\r\nCache-Control: no-cache\r\n\r\n";
+  server.sendContent(header);
+}
+
+void resetLog() {
+  Log = "";
+  String header = "HTTP/1.1 301 OK\r\nLocation: /\r\nCache-Control: no-cache\r\n\r\n";
+  server.sendContent(header);
+}
+
+void switchOffe() {
+  digitalWrite(LED, LOW);
   String header = "HTTP/1.1 301 OK\r\nLocation: /\r\nCache-Control: no-cache\r\n\r\n";
   server.sendContent(header);
 }
