@@ -4,6 +4,9 @@
 #define RST_PIN 9
 MFRC522 mfrc522(SS_PIN, RST_PIN); 
 
+int lock = 2;
+int buzz = 3;
+
 String master;
 String prog1 = "";
 String prog2 = "";
@@ -14,6 +17,8 @@ int key = 0;
 void setup() 
 {
   Serial.begin(9600);   // Initiate a serial communication
+  pinMode(lock, OUTPUT);
+  pinMode(buzz, OUTPUT);
   SPI.begin();      // Initiate  SPI bus
   mfrc522.PCD_Init();   // Initiate MFRC522
   Serial.println("Approximate your card to the reader...");
@@ -30,14 +35,6 @@ void setup()
 }
 void loop() 
 {
-<<<<<<< HEAD
-  
-=======
-  /*
-   * 
-   * /
-   */
->>>>>>> 7a3418ca9c0929e9a0e224c1314dcbafc3514f01
   // Look for new cards
   if ( ! mfrc522.PICC_IsNewCardPresent()) 
   {
@@ -69,14 +66,15 @@ void loop()
     Serial.println(prog1);
     if (content.substring(1) == prog1 || content.substring(1) == prog2 || content.substring(1) == prog3){
       Serial.println("Authorized");
-      digitalWrite(2,HIGH);
-      digitalWrite(3,HIGH);
+      digitalWrite(lock,HIGH);
       delay(15000);
-      digitalWrite(2,LOW);
-      digitalWrite(3,LOW);
+      digitalWrite(lock,LOW);
     }
     else {
+      digitalWrite(buzz,HIGH);
       Serial.println("UnAuth");
+      delay(1000);
+      digitalWrite(buzz,LOW);
     }
   }
   delay(3000);
