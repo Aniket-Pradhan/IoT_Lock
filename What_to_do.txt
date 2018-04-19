@@ -1,6 +1,8 @@
-1. Get the lock working.
-2. Add LOG files.
-3. Make a 3D Object.
-4. Make a website.
-5. RFID/NFC.
-6. 
+1. Get the lock working. -- DONE
+2. Add LOG files. -- DONE
+3. Make a 3D Object. -- DONE
+4. Make a website. -- DONE
+5. RFID/NFC. -- DONE
+6. Add a buzzer/alarm -- DONE
+7. Cover everything
+8. Paint?
