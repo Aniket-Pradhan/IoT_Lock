@@ -9,6 +9,7 @@ String prog1 = "";
 String prog2 = "";
 String prog3 = "";
 int key = 0;
+ int t1 = 0;
 
 void setup() 
 {
@@ -22,14 +23,21 @@ void setup()
   prog2 = "";
   prog3 = "";
   key = 0;
+  pinMode(2,OUTPUT);
+  pinMode(3,OUTPUT);
+ 
 
 }
 void loop() 
 {
+<<<<<<< HEAD
+  
+=======
   /*
    * 
    * /
    */
+>>>>>>> 7a3418ca9c0929e9a0e224c1314dcbafc3514f01
   // Look for new cards
   if ( ! mfrc522.PICC_IsNewCardPresent()) 
   {
@@ -61,12 +69,18 @@ void loop()
     Serial.println(prog1);
     if (content.substring(1) == prog1 || content.substring(1) == prog2 || content.substring(1) == prog3){
       Serial.println("Authorized");
+      digitalWrite(2,HIGH);
+      digitalWrite(3,HIGH);
+      delay(15000);
+      digitalWrite(2,LOW);
+      digitalWrite(3,LOW);
     }
     else {
       Serial.println("UnAuth");
     }
   }
   delay(3000);
+  
 }
 
 String fix(String progg){
@@ -129,4 +143,3 @@ void progMode(void) {
     }
   }
 }
-
